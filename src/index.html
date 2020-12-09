@@ -55,7 +55,7 @@
       status.innerHTML = `<i>Invalid path!</i>`;
       document.querySelector("button").disabled = true;
     } else {
-      status.innerHTML = `<i>The new URL will be https://uxkkx.sse.codesandbox.io/${input.value}`;
+      status.innerHTML = `<i>The new URL will be ${window.location.href}${input.value}`;
 
       document.querySelector("button").disabled = false;
     }
@@ -78,7 +78,7 @@
 
   function copyurl() {
     copy(
-      "https://uxkkx.sse.codesandbox.io/" +
+      window.location.href +
         document.getElementsByName("id")[0].value
     );
   }
