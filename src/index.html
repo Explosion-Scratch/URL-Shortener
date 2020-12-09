@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
 <head>
-  <title>D'oh</title>
+  <title>Slight- A simple url shortener</title>
 </head>
 
 <body>
-  <h1>D'ohs</h1>
-  <center><i>A url shortener with so many glitches you'll say "D'oh!"</i></center><br>
+  <h1>Slight</h1>
+  <center><i>A url shortener that I made. (Slight was the only name not already taken)</i></center><br>
   <form onsubmit="copyurl()" action="/url" method="POST">
     <div class="inputs">
       <input value='https://google.com' type="url" name="url" placeholder="URL to shorten" required />
@@ -122,7 +122,10 @@
 </style>
 <script>
   if (window.location.href === 'https://w4ylx.sse.codesandbox.io/') {
-    // window.location.href = 'https://dohs.herokuapp.com';
+    window.location.href = 'https://dohs.herokuapp.com';
+  }
+  if (/doh.gq/.test(window.location.href)) {
+    window.location.href = `https://dohs.herokuapp.com${window.location.pathname}`;
   }
   var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
   var url = new RegExp(urlRegex, 'i');
