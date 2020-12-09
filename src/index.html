@@ -71,7 +71,6 @@
     var url = new RegExp(urlRegex, 'i');
     if (!(url.test(document.querySelector('input[type="url"]').value))) {
       document.querySelector("button").disabled = true;
-      document.querySelector('input[type="url"]').style.border = '1px solid red';
     }
   }, 10);
   document.getElementsByName("id")[0].value = id();
