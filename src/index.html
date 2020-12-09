@@ -40,8 +40,7 @@
           input.style.border = '1px solid green';
           input.style.boxShadow = 'none';
         } else {
-          input.style.border = '1px solid red';
-          input.style.boxShadow = '0 0 0 3px tomato';
+          input.style.border = '1px solid tomato';
         }
       }
     }
@@ -72,6 +71,7 @@
     var url = new RegExp(urlRegex, 'i');
     if (!(url.test(document.querySelector('input[type="url"]').value))) {
       document.querySelector("button").disabled = true;
+      document.querySelector('input[type="url"]').style.border = '1px solid lightgrey';
     }
   }, 10);
   document.getElementsByName("id")[0].value = id();
