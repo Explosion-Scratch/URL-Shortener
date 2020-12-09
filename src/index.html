@@ -11,7 +11,7 @@
       <input type="text" name="id" placeholder="ID" required />
       <span id="new-url"></span>
     </div>
-    <div class='buttons'><button type="submit">Create new url!</button><button type="button" onclick='document.getElementsByName("id")[0].value = Math.floor(Math.random() * (9999999999999 - 999999999999 + 1) + 999999999999).toString(36).slice(-4);'value="New id">New id</button>
+    <div class='buttons'><button id='submit' type="submit">Create new url!</button><button type="button" onclick='document.getElementsByName("id")[0].value = Math.floor(Math.random() * (9999999999999 - 999999999999 + 1) + 999999999999).toString(36).slice(-4);'value="New id">New id</button>
   </form>
 </body>
 <style>
@@ -19,7 +19,7 @@
 
   * {
     opacity: 0;
-    animation: opacity 3s ease 2s 1 forwards;
+    animation: opacity 3s ease 0s 1 forwards;
     font-family: Poppins, sans-serif;
     padding: 0;
     margin: 0;
@@ -76,6 +76,7 @@
 
   button[disabled] {
     opacity: 0.6;
+    background: #00b35fa4;
     cursor: not-allowed;
   }
 
@@ -115,6 +116,8 @@
   if (window.location.href === 'https://w4ylx.sse.codesandbox.io/') {
     window.location.href = 'https://dohs.herokuapp.com';
   }
+  var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
+    var url = new RegExp(urlRegex, 'i');
   var urls = [];
   fetch("/urls")
     .then((res) => res.json())
@@ -124,8 +127,6 @@
 
   document.querySelector('input[type="url"]').onblur = () => {
     var input = document.querySelector('input[type="url"]');
-    var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
-    var url = new RegExp(urlRegex, 'i');
     if (url.test(input.value)) {
       console.log('Matches')
       input.style.border = '1px solid green';
@@ -149,25 +150,24 @@
     // Test with regex
     if (/[^a-z0-9A-Z]/.test(input.value)) {
       status.innerHTML = `<i>Invalid path!</i>`;
-      document.querySelector("button").disabled = true;
+      document.querySelector("#submit").disabled = true;
     } else {
       status.innerHTML = `<i>The new URL will be ${window.location.href}${input.value}`;
 
-      document.querySelector("button").disabled = false;
+      document.querySelector("#submit").disabled = false;
     }
     if (input.value.length < 3 || input.value.length > 20) {
       status.innerHTML = `<i>Id's must be between 3 and 20 characters</i>`;
-      document.querySelector("button").disabled = true;
+      document.querySelector("#submit").disabled = true;
     }
     // Test if it already exits
     if (urls.includes(input.value)) {
-      document.querySelector("button").disabled = true;
+      document.querySelector("#submit").disabled = true;
       status.innerHTML = `<i>That url already exists</i>`;
     }
-    var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
-    var url = new RegExp(urlRegex, 'i');
+
     if (!(url.test(document.querySelector('input[type="url"]').value))) {
-      document.querySelector("button").disabled = true;
+      document.querySelector("#submit").disabled = true;
     }
   }, 10);
   document.getElementsByName("id")[0].value = id();
