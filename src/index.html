@@ -18,6 +18,11 @@
   @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
   * {
+    opacity: 0;
+    animation-name: opacity;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-delay: 2s;
     font-family: Poppins, sans-serif;
     padding: 0;
     margin: 0;
@@ -99,6 +104,14 @@
     height: 50px;
     display: block;
     overflow: hidden;
+  }
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 </style>
 <script>
