@@ -166,7 +166,7 @@
       newhtml = `<i>Invalid path!</i>`;
       document.querySelector("#submit").disabled = true;
     } else {
-      newhtml = `<i>The new URL will be ${window.location.href}${input.value}</i>`;
+      newhtml = `<i>The new URL will be http://slight.gq/${input.value}</i>`;
 
       document.querySelector("#submit").disabled = false;
     }
@@ -190,7 +190,7 @@
 
   function copyurl() {
     copy(
-      window.location.href +
+      'http://slight.gq' +
       document.getElementsByName("id")[0].value
     );
   }
