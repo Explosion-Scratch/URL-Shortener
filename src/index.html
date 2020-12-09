@@ -19,11 +19,7 @@
 
   * {
     opacity: 0;
-    animation-name: opacity;
-    animation-duration: 2s;
-    animation-timing-function: ease;
-    animation-direction: forwards;
-    animation-delay: 2s;
+    animation: opacity 3s ease 2s 1 forwards;
     font-family: Poppins, sans-serif;
     padding: 0;
     margin: 0;
@@ -117,7 +113,7 @@
 </style>
 <script>
   if (window.location.href === 'https://w4ylx.sse.codesandbox.io/') {
-    window.location.href = 'https://dohs.herokuapp.com';
+    // window.location.href = 'https://dohs.herokuapp.com';
   }
   var urls = [];
   fetch("/urls")
