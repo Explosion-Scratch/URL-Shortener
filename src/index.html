@@ -3,7 +3,8 @@
 
 </head>
 <body>
-  <h1>URL Shortner</h1>
+  <h1>Dohs</h1>
+  <center><i>A url shortener with so many glitches you'll say 'Doh!'</i></center><br>
   <form onsubmit="copyurl()" action="/url" method="POST">
     <div class="inputs">
       <input type="url" name="url" placeholder="URL" required/>
@@ -21,6 +22,30 @@
       urls = urldata.urls.split(",");
     });
 
+  document.querySelector('input[type="url"]').onblur = () => {
+    var input = document.querySelector('input[type="url"]');
+    var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
+    var url = new RegExp(urlRegex, 'i');
+    if (url.test(input.value)) {
+      console.log('Matches')
+      input.style.border = '1px solid green';
+      input.style.boxShadow = 'none';
+      input.onkeyup = () => {};
+    } else {
+      console.log('No match')
+      input.style.border = '1px solid red';
+      input.style.boxShadow = '0 0 0 3px tomato';
+      input.onkeyup = () => {
+        if (url.test(input.value)) {
+          input.style.border = '1px solid green';
+          input.style.boxShadow = 'none';
+        } else {
+          input.style.border = '1px solid red';
+          input.style.boxShadow = '0 0 0 3px tomato';
+        }
+      }
+    }
+  }
   setInterval(() => {
     // Input and status span
     var input = document.getElementsByName("id")[0];
@@ -42,6 +67,11 @@
     if (urls.includes(input.value)) {
       document.querySelector("button").disabled = true;
       status.innerHTML = `<i>That url already exists</i>`;
+    }
+    var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
+    var url = new RegExp(urlRegex, 'i');
+    if (!(url.test(document.querySelector('input[type="url"]').value))) {
+      document.querySelector("button").disabled = true;
     }
   }, 10);
   document.getElementsByName("id")[0].value = id();
