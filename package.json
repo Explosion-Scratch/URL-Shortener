@@ -1,0 +1,19 @@
+{
+  "name": "url-shortener-working",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "devstart": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "nanoid": "3.1.20",
+    "node-persist": "3.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.4"
+  },
+  "keywords": []
+}

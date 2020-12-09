@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+  <h1>URL Shortner</h1>
+  <form onsubmit="copyurl()" action="/url" method="POST">
+    <div class="inputs">
+      <input type="url" name="url" placeholder="URL" required/>
+      <input type="text" name="id" placeholder="ID" required />
+      <span id="new-url"></span>
+    </div>
+    <div class='buttons'><button type="submit">Create new url!</button><button type="button" onclick='document.getElementsByName("id")[0].value = Math.floor(Math.random() * (9999999999999 - 999999999999 + 1) + 999999999999).toString(36).slice(-4);'value="New id">New id</button>
+  </form>
+</body>
+<script>
+  var urls = [];
+  fetch("/urls")
+    .then((res) => res.json())
+    .then((urldata) => {
+      urls = urldata.urls.split(",");
+    });
+
+  setInterval(() => {
+    // Input and status span
+    var input = document.getElementsByName("id")[0];
+    var status = document.getElementById("new-url");
+    // Test with regex
+    if (/[^a-z0-9A-Z]/.test(input.value)) {
+      status.innerHTML = `<i>Invalid path!</i>`;
+      document.querySelector("button").disabled = true;
+    } else {
+      status.innerHTML = `<i>The new URL will be https://uxkkx.sse.codesandbox.io/${input.value}`;
+
+      document.querySelector("button").disabled = false;
+    }
+    if (input.value.length < 3 || input.value.length > 20) {
+      status.innerHTML = `<i>Id's must be between 3 and 20 characters</i>`;
+      document.querySelector("button").disabled = true;
+    }
+    // Test if it already exits
+    if (urls.includes(input.value)) {
+      document.querySelector("button").disabled = true;
+      status.innerHTML = `<i>That url already exists</i>`;
+    }
+  }, 10);
+  document.getElementsByName("id")[0].value = id();
+
+  function copyurl() {
+    copy(
+      "https://uxkkx.sse.codesandbox.io/" +
+        document.getElementsByName("id")[0].value
+    );
+  }
+  function id() {
+    return Date.now().toString(36).slice(-4);
+  }
+</script>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+  * {
+    font-family: Poppins, sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  input {
+    transition: box-shadow 0.3s ease;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    margin-bottom: 5px;
+  }
+  input:focus {
+    box-shadow: 0 0 0 3px lightblue;
+    outline: none;
+  }
+  button {
+    cursor: pointer;
+    transition: background 0.3s ease;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  button:hover {
+    background: #1a8a34;
+  }
+  button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    width: 400px;
+  }
+  td,
+  th {
+    border-collapse: collapse;
+    border: 0.5px solid lightgray;
+    padding: 5px;
+  }
+  th:nth-child(odd) {
+    background: rgb(238, 238, 238);
+  }
+  #new-url {
+    width: 400px;
+    height: 50px;
+    display: block;
+    overflow: hidden;
+  }
+</style>
+<script>
+  function copy(text) {
+    var copy_input = document.createElement("TEXTAREA");
+    copy_input.value = text;
+    document.body.appendChild(copy_input);
+    copy_input.select();
+    document.execCommand("copy");
+    copy_input.remove();
+  }
+</script>
