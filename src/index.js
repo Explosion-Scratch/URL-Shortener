@@ -2,20 +2,25 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const storage = require("node-persist");
+
+// Init node-persist
 storage.init().then(() => {
   console.log("Storage initiated");
 });
 
+// Body parser
 app.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
 
+// Homepage
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
+// Clicks from a url
 app.get("/:id/clicks", (req, res) => {
   var id = req.path.replace(/^\//, "").replace(/\/clicks$/, "");
   storage
@@ -32,6 +37,7 @@ app.get("/:id/clicks", (req, res) => {
     });
 });
 
+// Get urls list
 app.get("/urls", (req, res) => {
   storage
     .getItem("urls")
@@ -41,6 +47,7 @@ app.get("/urls", (req, res) => {
     .catch((err) => {});
 });
 
+// Add a new url
 app.post("/url", (req, res) => {
   storage.getItem("urls").then((urls) => {
     storage.setItem("urls", urls + "," + req.body.id);
