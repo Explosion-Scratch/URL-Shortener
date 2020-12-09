@@ -15,6 +15,9 @@
   </form>
 </body>
 <script>
+  if (window.location.href === 'https://w4ylx.sse.codesandbox.io/') {
+    window.location.href = 'https://dohs.herokuapp.com';
+  }
   var urls = [];
   fetch("/urls")
     .then((res) => res.json())
