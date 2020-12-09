@@ -7,7 +7,7 @@
   <center><i>A url shortener with so many glitches you'll say 'Doh!'</i></center><br>
   <form onsubmit="copyurl()" action="/url" method="POST">
     <div class="inputs">
-      <input type="url" name="url" placeholder="URL" required/>
+      <input value='https://google.com'type="url" name="url" placeholder="URL" required/>
       <input type="text" name="id" placeholder="ID" required />
       <span id="new-url"></span>
     </div>
@@ -29,16 +29,13 @@
     if (url.test(input.value)) {
       console.log('Matches')
       input.style.border = '1px solid green';
-      input.style.boxShadow = 'none';
       input.onkeyup = () => {};
     } else {
       console.log('No match')
       input.style.border = '1px solid red';
-      input.style.boxShadow = '0 0 0 3px tomato';
       input.onkeyup = () => {
         if (url.test(input.value)) {
           input.style.border = '1px solid green';
-          input.style.boxShadow = 'none';
         } else {
           input.style.border = '1px solid tomato';
         }
@@ -71,7 +68,7 @@
     var url = new RegExp(urlRegex, 'i');
     if (!(url.test(document.querySelector('input[type="url"]').value))) {
       document.querySelector("button").disabled = true;
-      document.querySelector('input[type="url"]').style.border = '1px solid lightgrey';
+      document.querySelector('input[type="url"]').style.border = '1px solid red';
     }
   }, 10);
   document.getElementsByName("id")[0].value = id();
